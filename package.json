@@ -1,0 +1,16 @@
+{
+  "name": "fastswap",
+  "version": "0.1.0",
+  "description": "",
+  "main": "fasswap.js",
+  "scripts": {
+    "start": "node fastswap.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "commander": "^2.20.0",
+    "puppeteer": "^1.17.0"
+  }
+}
