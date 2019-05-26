@@ -13,15 +13,15 @@ const puppeteer	= require('puppeteer'),
 			status = response.status(),
 			body = await response.text(),
 			availableTicket = parseInt($(body).find('h2.css-1wu73kq.e149jiyc1').first().text())
-            ;
-            
-        if (availableTicket === 0) {
+			;
+			
+		if (availableTicket === 0) {
 			await sleep(10e3); // wait 10s
 			await bookTicket(browser, swapUrl);
-        }
+		}
 
-        const ticketNodes = $(body).find('a.css-1qka4wa.e15p5mol1');
-        ticketNodes.each(async (i, ticketNode) => {
+		const ticketNodes = $(body).find('a.css-1qka4wa.e15p5mol1');
+		ticketNodes.each(async (i, ticketNode) => {
 			var ticketUrl = $(ticketNode).attr('href'),
 				page = await browser.newPage()
 				;
@@ -47,5 +47,5 @@ var pageCommon = null;
 puppeteer.launch({ headless: false })
 .then(async browser =>
 {
-    await bookTicket(browser, program.url);
+	await bookTicket(browser, program.url);
 });
