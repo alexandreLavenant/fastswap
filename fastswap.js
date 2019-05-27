@@ -16,7 +16,7 @@ const puppeteer	= require('puppeteer'),
 			;
 			
 		if (availableTicket === 0) {
-			await sleep(10e3); // wait 10s
+			await sleep(refreshTime); // wait 10s
 			await bookTicket(browser, swapUrl);
 		}
 
@@ -39,10 +39,13 @@ program
 	.usage('-u <url ...>')
 	.version(require('./package.json').version, '-v, --version')
 	.option('-u, --url <url>', 'Ticket swap url of the event')
+	.option('-r, --refresh <time(s)>', 'Page refresh time in seconds', parseInt, 10)
 	.parse(process.argv)
 	;
 
-var pageCommon = null;
+var pageCommon = null,
+	refreshTime = program.refresh * 1000
+	;
 
 puppeteer.launch({ headless: false })
 .then(async browser =>
