@@ -16,11 +16,15 @@ const puppeteer	= require('puppeteer'),
 			;
 			
 		if (availableTicket === 0) {
+			console.info('No ticket found: waiting ' + refreshTime + ' and refresh');
 			await sleep(refreshTime); // wait 10s
-			await bookTicket(browser, swapUrl);
+
+			return false;
 		}
 
 		const ticketNodes = $(body).find('a.css-1qka4wa.e15p5mol1');
+		console.info(ticketNodes.length + ' Ticket(s) found: openning ticket(s) in new tab(s)');
+
 		ticketNodes.each(async (i, ticketNode) => {
 			var ticketUrl = $(ticketNode).attr('href'),
 				page = await browser.newPage()
@@ -28,6 +32,8 @@ const puppeteer	= require('puppeteer'),
 
 			page.goto(baseUrl + ticketUrl);
 		});
+
+		return true;
 	},
 	sleep = function(ms)
 	{
@@ -44,11 +50,14 @@ program
 	;
 
 var pageCommon = null,
-	refreshTime = program.refresh * 1000
+	refreshTime = program.refresh * 1000,
+	ticketFound = false
 	;
 
 puppeteer.launch({ headless: false })
 .then(async browser =>
 {
-	await bookTicket(browser, program.url);
+	while(!ticketFound) {
+		ticketFound = await bookTicket(browser, program.url);
+	}
 });
