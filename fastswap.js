@@ -17,13 +17,13 @@ const puppeteer	= require('puppeteer'),
 			
 		if (availableTicket === 0) {
 			console.info('No ticket found: waiting ' + refreshTime + ' and refresh');
-			await sleep(refreshTime); // wait 10s
+			await sleep(refreshTime); // wait n = refreshTime seconds
 
 			return false;
 		}
 
 		const ticketNodes = $(body).find('a.css-1qka4wa.e15p5mol1');
-		console.info(ticketNodes.length + ' Ticket(s) found: openning ticket(s) in new tab(s)');
+		console.info(ticketNodes.length + ' Ticket(s) found: openning each ticket in a new tab');
 
 		ticketNodes.each(async (i, ticketNode) => {
 			var ticketUrl = $(ticketNode).attr('href'),
